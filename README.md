@@ -29,15 +29,6 @@
 
 ---
 
-## Project Structure
-
-quotespark/
-├── index.html
-├── styles.css
-├── script.js
-
----
-
 ## Technologies Used
 
 - **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
