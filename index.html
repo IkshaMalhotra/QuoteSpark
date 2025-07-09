@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuoteSpark - Combined Generator</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-u8C4vp96rlGK2kLrocSgTr5s0dY+x7P5wTnldttFT7ZLk7ebUXLhR8v0eDk38Wz/jp13pReD+7C5vjfzGXzN0Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <h1>QuoteSpark</h1>
+            <div id="dark-mode-toggle" class="toggle">
+                <span class="toggle-icon"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tabs Section -->
+    <div class="tabs">
+        <input type="radio" id="tab-1" name="tab-group" checked>
+        <label for="tab-1">Random Generator</label>
+
+        <input type="radio" id="tab-2" name="tab-group">
+        <label for="tab-2">Advanced Generator</label>
+
+        <!-- Random Generator Content -->
+        <div class="tab-content" id="content-1">
+            <section id="random-section" class="generator-section">
+                <h2>Random Quote Generator</h2>
+                <div class="container">
+                    <div class="controls">
+                        <select id="category-selector">
+                            <option value="motivational">Motivational</option>
+                            <option value="humor">Humor</option>
+                            <option value="relationship">Relationship Quotes</option>
+                            <option value="historical">Historical</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="tech">Tech and Innovation</option>
+                            <option value="philosophical">Philosophical</option>
+                            <option value="nature">Nature and Earth</option>
+                            <option value="dream">Dream and Imagination</option>
+                        </select>
+                        <button id="generate-btn">
+                            <i class="fas fa-random"></i> Generate Quote
+                        </button>
+                    </div>
+
+                    <div class="quote-box">
+                        <p id="quote">Select a category and generate a quote!</p>
+                        <p id="author"></p>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="speak-btn">
+                            <i class="fas fa-microphone"></i> Speak Quote
+                        </button>
+                        <button id="save-btn">
+                            <i class="fas fa-save"></i> Save Quote
+                        </button>
+                        <button id="favourite-btn">
+                            <i class="fas fa-star"></i> Favourite Quotes
+                        </button>
+                        <button id="download-btn">
+                            <i class="fas fa-download"></i> Download Quote
+                        </button>
+                    </div>
+
+                    <div id="favourites-container" class="favourites-container" style="display: none;"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Advanced Generator Content -->
+        <div class="tab-content" id="content-2">
+            <section id="advanced-section" class="generator-section">
+                <h2>Advanced Quote Generator</h2>
+                <div class="generator-container">
+                    <form id="adv-quote-form">
+                        <div class="form-group">
+                            <label for="adv-description">Describe your desired quote</label>
+                            <input type="text" id="adv-description" name="adv-description"
+                                placeholder="E.g. Motivation for a startup" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adv-topic">Select Quote Topic</label>
+                            <select id="adv-topic">
+                                <option value="Inspirational">Inspirational</option>
+                                <option value="Funny">Funny</option>
+                                <option value="Love">Love</option>
+                                <option value="Career">Career</option>
+                                <option value="Life">Life</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adv-tone">Select Tone/Style</label>
+                            <select id="adv-tone">
+                                <option value="Inspiring">Inspiring</option>
+                                <option value="Humorous">Humorous</option>
+                                <option value="Romantic">Romantic</option>
+                                <option value="Serious">Serious</option>
+                                <option value="Light">Light</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adv-length">Select Quote Length</label>
+                            <select id="adv-length">
+                                <option value="2-4 words">2-4 words</option>
+                                <option value="5-8 words" selected>5-8 words</option>
+                                <option value="9-12 words">9-12 words</option>
+                                <option value="13-16 words">13-16 words</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" id="adv-generate-btn">
+                            <i class="fas fa-magic"></i> Generate Quotes
+                        </button>
+                    </form>
+
+                    <div id="adv-results" class="results">
+                        <!-- Advanced quotes will appear here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
