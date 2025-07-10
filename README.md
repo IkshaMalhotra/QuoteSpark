@@ -3,6 +3,8 @@
 **QuoteSpark** is a modern and interactive quote generator web application built with HTML, CSS, and JavaScript. It allows users to explore, generate, and personalize quotes through two powerful modes — **Random Generator** and **Advanced Generator**.
 
 ---
+https://ikshamalhotra.github.io/QuoteSpark/
+---
 
 ## Features
 
