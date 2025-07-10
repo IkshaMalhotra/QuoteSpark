@@ -3,12 +3,25 @@ const darkModeToggle = document.getElementById("dark-mode-toggle");
 if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark-mode");
     darkModeToggle.classList.add("active");
+    darkModeToggle.setAttribute("aria-pressed", "true");
+} else {
+    darkModeToggle.setAttribute("aria-pressed", "false");
 }
 darkModeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     darkModeToggle.classList.toggle("active");
     const theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+    const isDarkMode = document.body.classList.contains("dark-mode");
+    darkModeToggle.setAttribute("aria-pressed", isDarkMode.toString());
     localStorage.setItem("theme", theme);
+});
+
+// Handle keyboard navigation for dark mode toggle
+darkModeToggle.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        darkModeToggle.click();
+    }
 });
 
 // RANDOM QUOTE GENERATOR
@@ -78,7 +91,16 @@ generateBtn.addEventListener("click", () => {
 });
 
 speakBtn.addEventListener("click", () => {
-    const textToSpeak = `${quoteText.textContent} ${authorText.textContent}`;
+    const currentQuote = quoteText.textContent;
+    const currentAuthor = authorText.textContent;
+
+    // Check if there's actual content to speak
+    if (!currentQuote || currentQuote.includes("generate a quote") || currentQuote.trim() === "") {
+        alert("Please generate a quote first!");
+        return;
+    }
+
+    const textToSpeak = `${currentQuote} ${currentAuthor}`;
     if ("speechSynthesis" in window) {
         const utterance = new SpeechSynthesisUtterance(textToSpeak);
         window.speechSynthesis.speak(utterance);
@@ -90,11 +112,26 @@ speakBtn.addEventListener("click", () => {
 saveBtn.addEventListener("click", () => {
     const currentQuote = quoteText.textContent;
     const currentAuthor = authorText.textContent;
-    if (currentQuote.trim() !== "") {
-        savedQuotes.push({ quote: currentQuote, author: currentAuthor });
-        localStorage.setItem("favouriteQuotes", JSON.stringify(savedQuotes));
-        alert("Quote saved to favourites!");
+
+    // Check if there's actual content to save
+    if (!currentQuote || currentQuote.includes("generate a quote") || currentQuote.trim() === "") {
+        alert("Please generate a quote first!");
+        return;
     }
+
+    // Check if quote is already saved
+    const isDuplicate = savedQuotes.some(saved =>
+        saved.quote === currentQuote && saved.author === currentAuthor
+    );
+
+    if (isDuplicate) {
+        alert("This quote is already in your favourites!");
+        return;
+    }
+
+    savedQuotes.push({ quote: currentQuote, author: currentAuthor });
+    localStorage.setItem("favouriteQuotes", JSON.stringify(savedQuotes));
+    alert("Quote saved to favourites!");
 });
 
 favouriteBtn.addEventListener("click", () => {
@@ -135,16 +172,51 @@ function displayFavourites() {
 }
 // ADVANCED GENERATOR
 const advQuotes = [
+    // Inspirational quotes
+    { topic: "Inspirational", tone: "Inspiring", length: "2-4 words", quote: "Never give up.", author: "Anonymous" },
     { topic: "Inspirational", tone: "Inspiring", length: "5-8 words", quote: "Dream big, conquer challenges.", author: "Anonymous" },
+    { topic: "Inspirational", tone: "Inspiring", length: "5-8 words", quote: "Believe in your dreams always.", author: "Anonymous" },
     { topic: "Inspirational", tone: "Inspiring", length: "9-12 words", quote: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+    { topic: "Inspirational", tone: "Inspiring", length: "9-12 words", quote: "Success is not final, failure is not fatal: it is the courage to continue.", author: "Winston Churchill" },
+    { topic: "Inspirational", tone: "Inspiring", length: "13-16 words", quote: "The only way to do great work is to love what you do and pursue it passionately.", author: "Steve Jobs" },
+
+    // Funny quotes
+    { topic: "Funny", tone: "Humorous", length: "2-4 words", quote: "Coffee first.", author: "Unknown" },
     { topic: "Funny", tone: "Humorous", length: "5-8 words", quote: "I used to think I was indecisive.", author: "Unknown" },
+    { topic: "Funny", tone: "Humorous", length: "5-8 words", quote: "Procrastination is my superpower.", author: "Unknown" },
     { topic: "Funny", tone: "Humorous", length: "9-12 words", quote: "I am not lazy, I'm on energy-saving mode.", author: "Unknown" },
+    { topic: "Funny", tone: "Humorous", length: "9-12 words", quote: "I'm not arguing, I'm just explaining why I'm right.", author: "Unknown" },
+    { topic: "Funny", tone: "Humorous", length: "13-16 words", quote: "I told my wife she was drawing her eyebrows too high. She looked surprised.", author: "Unknown" },
+
+    // Love quotes
+    { topic: "Love", tone: "Romantic", length: "2-4 words", quote: "Love conquers all.", author: "Virgil" },
     { topic: "Love", tone: "Romantic", length: "5-8 words", quote: "Love is in every heartbeat.", author: "Anonymous" },
+    { topic: "Love", tone: "Romantic", length: "5-8 words", quote: "You are my sunshine daily.", author: "Anonymous" },
     { topic: "Love", tone: "Romantic", length: "9-12 words", quote: "In the end, we all dream of love and belonging.", author: "Anonymous" },
+    { topic: "Love", tone: "Romantic", length: "9-12 words", quote: "Being deeply loved by someone gives you strength, loving someone deeply gives courage.", author: "Lao Tzu" },
+    { topic: "Love", tone: "Romantic", length: "13-16 words", quote: "The best thing to hold onto in life is each other, through all seasons of joy.", author: "Audrey Hepburn" },
+
+    // Career quotes
+    { topic: "Career", tone: "Serious", length: "2-4 words", quote: "Work hard.", author: "Anonymous" },
     { topic: "Career", tone: "Serious", length: "5-8 words", quote: "Success is built upon persistent effort.", author: "Anonymous" },
+    { topic: "Career", tone: "Serious", length: "5-8 words", quote: "Excellence is never an accident.", author: "Aristotle" },
     { topic: "Career", tone: "Serious", length: "9-12 words", quote: "Your work is going to fill a large part of your life.", author: "Steve Jobs" },
+    { topic: "Career", tone: "Serious", length: "9-12 words", quote: "Opportunities don't happen. You create them through dedication and hard work.", author: "Chris Grosser" },
+    { topic: "Career", tone: "Serious", length: "13-16 words", quote: "The way to get started is to quit talking and begin doing what needs to be done.", author: "Walt Disney" },
+
+    // Life quotes
+    { topic: "Life", tone: "Inspiring", length: "2-4 words", quote: "Live fully.", author: "Anonymous" },
     { topic: "Life", tone: "Inspiring", length: "5-8 words", quote: "Life is a daring adventure.", author: "Helen Keller" },
-    { topic: "Life", tone: "Inspiring", length: "9-12 words", quote: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" }
+    { topic: "Life", tone: "Inspiring", length: "5-8 words", quote: "Every moment is a choice.", author: "Anonymous" },
+    { topic: "Life", tone: "Inspiring", length: "9-12 words", quote: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
+    { topic: "Life", tone: "Inspiring", length: "9-12 words", quote: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+    { topic: "Life", tone: "Inspiring", length: "13-16 words", quote: "The purpose of our lives is to be happy and to make others happy along the way.", author: "Dalai Lama" },
+
+    // Additional variety with different tones
+    { topic: "Life", tone: "Light", length: "5-8 words", quote: "Smile, it's free therapy.", author: "Anonymous" },
+    { topic: "Life", tone: "Light", length: "9-12 words", quote: "Life is too short to be serious all the time.", author: "Anonymous" },
+    { topic: "Career", tone: "Light", length: "5-8 words", quote: "Monday motivation starts with coffee.", author: "Anonymous" },
+    { topic: "Love", tone: "Light", length: "5-8 words", quote: "Love is sharing your popcorn.", author: "Anonymous" }
 ];
 
 const advForm = document.getElementById("adv-quote-form");
@@ -160,25 +232,33 @@ advForm.addEventListener("submit", function (e) {
     let filteredQuotes = advQuotes.filter(q =>
         q.topic === topic &&
         q.tone === tone &&
-        q.length === length &&
-        q.quote.toLowerCase().includes(description) // ← NEW
+        q.length === length
     );
 
+    // Apply description filter only if description is provided
+    if (description && description.trim() !== "") {
+        const keywords = description.split(" ").filter(word => word.length > 1); // Include 2+ character words
+        filteredQuotes = filteredQuotes.filter(q => {
+            const quoteText = q.quote.toLowerCase();
+            const authorText = q.author.toLowerCase();
+            return keywords.some(word =>
+                quoteText.includes(word.toLowerCase()) ||
+                authorText.includes(word.toLowerCase()) ||
+                quoteText.includes(description) // Also check for full description match
+            );
+        });
+    }
+
     if (filteredQuotes.length === 0) {
-        advResults.innerHTML = "<p>No matching quotes found. Please try different criteria.</p>";
+        advResults.innerHTML = "<p>No matching quotes found. Please try different criteria or leave description empty for broader results.</p>";
         return;
     }
 
-    // Shuffle
+    // Shuffle the results
     for (let i = filteredQuotes.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [filteredQuotes[i], filteredQuotes[j]] = [filteredQuotes[j], filteredQuotes[i]];
     }
-
-    const keywords = description.split(" ");
-    filteredQuotes = filteredQuotes.filter(q =>
-        keywords.some(word => q.quote.toLowerCase().includes(word))
-    );
 
     const outputQuotes = filteredQuotes.slice(0, 4);
     advResults.innerHTML = "";
