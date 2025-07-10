@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@400;600&display=swap');
 
 :root {
-    /* Light mode colors - Modern blue gradient theme */
     --primary-color: #4f46e5;
     --primary-hover: #3730a3;
     --secondary-color: #1e40af;
@@ -14,7 +13,6 @@
     --success-color: #10b981;
     --warning-color: #f59e0b;
 
-    /* Dark mode colors - Clean and deep gray scheme */
     --dark-primary: #4f46e5;
     --dark-primary-hover: #6366f1;
     --dark-secondary: #1e1e2f;
@@ -156,7 +154,6 @@ body {
     font-family: var(--font-heading);
 }
 
-/* Box Styling for All Modes */
 .container,
 .generator-container,
 .quote-box,
@@ -324,7 +321,6 @@ form#adv-quote-form {
     }
 }
 
-/* Dark Mode Styling */
 body.dark-mode {
     background: linear-gradient(to bottom right, #121212, #1e1e2f);
     color: var(--dark-text);
