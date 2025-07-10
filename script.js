@@ -170,6 +170,7 @@ function displayFavourites() {
     });
     favouritesContainer.appendChild(list);
 }
+
 // ADVANCED GENERATOR
 const advQuotes = [
     // Inspirational quotes
