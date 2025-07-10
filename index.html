@@ -24,8 +24,9 @@
     <nav class="navbar">
         <div class="navbar-content">
             <h1>QuoteSpark</h1>
-            <div id="dark-mode-toggle" class="toggle">
-                <span class="toggle-icon"></span>
+            <div id="dark-mode-toggle" class="toggle" role="button" tabindex="0" aria-label="Toggle dark mode"
+                aria-pressed="false">
+                <span class="toggle-icon" aria-hidden="true"></span>
             </div>
         </div>
     </nav>
@@ -44,7 +45,8 @@
                 <h2>Random Quote Generator</h2>
                 <div class="container">
                     <div class="controls">
-                        <select id="category-selector">
+                        <label for="category-selector" class="sr-only">Select quote category</label>
+                        <select id="category-selector" aria-label="Select quote category">
                             <option value="motivational">Motivational</option>
                             <option value="humor">Humor</option>
                             <option value="relationship">Relationship Quotes</option>
@@ -55,8 +57,8 @@
                             <option value="nature">Nature and Earth</option>
                             <option value="dream">Dream and Imagination</option>
                         </select>
-                        <button id="generate-btn">
-                            <i class="fas fa-random"></i> Generate Quote
+                        <button id="generate-btn" aria-label="Generate a random quote">
+                            <i class="fas fa-shuffle" aria-hidden="true"></i> Generate Quote
                         </button>
                     </div>
 
@@ -91,12 +93,7 @@
                 <h2>Advanced Quote Generator</h2>
                 <div class="generator-container">
                     <form id="adv-quote-form">
-                        <div class="form-group">
-                            <label for="adv-description">Describe your desired quote</label>
-                            <input type="text" id="adv-description" name="adv-description"
-                                placeholder="E.g. Motivation for a startup" class="form-control" />
-                        </div>
-
+                    
                         <div class="form-group">
                             <label for="adv-topic">Select Quote Topic</label>
                             <select id="adv-topic">
